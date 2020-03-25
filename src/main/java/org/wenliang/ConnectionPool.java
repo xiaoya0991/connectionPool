@@ -74,18 +74,14 @@ public class ConnectionPool {
      */
     public Connection getConnection() throws SQLException, ClassNotFoundException, InterruptedException {
         synchronized (this) {
-
             Connection connection = null;
-
             //判读是否小于最大连接数
             if (connNum <= bean.getMaxActiveConnections()) {
-
                 //判断空闲连接池是够有连接
                 if (freeConnection.size() > 0) {
                     connection = freeConnection.remove(0);
                 }
 //                connection = createConnect();
-
                 //判断连接是否可用
                 if (isAvailable(connection)) {
                     activeConnection.add(connection);
@@ -94,10 +90,8 @@ public class ConnectionPool {
 //                connection = getConnection();
             }
             wait(bean.getConnTimeOut());
-
             //重新获取连接
             //connection = getConnection();
-
             return connection;
         }
 
